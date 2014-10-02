@@ -31,7 +31,7 @@ class batman ($ipv4_suffix, $ipv4_subnet_start, $ipv6_subnet){
       'set iface[. = "bat0"] bat0',
       'set iface[. = "bat0"]/family inet',
       'set iface[. = "bat0"]/method static',
-      "set iface[. = \"bat0\"]/address 172.27.${ipv4_subnet_start}.${ipv4_suffix}",
+      "set iface[. = \"bat0\"]/address 172.27.${ipv4_subnet_start}.1",
       'set iface[. = "bat0"]/netmask 255.255.192.0',
       'set iface[. = "bat0"]/pre-up "modprobe batman-adv && tunctl -t mesh-vpn && batctl if add mesh-vpn"',
     ],

@@ -20,19 +20,12 @@ class supernode {
 
   $ipv4_subnet_start  = $ipv4_subnets[ $::supernodenum ][0]
   $ipv4_subnet_end    = $ipv4_subnets[ $::supernodenum ][1]
-  if $::supernodenum  == 1 {
-    $ipv4_suffix  = 3
-  }
-  else {
-    $ipv4_suffix  = 1
-  }
   $ipv6_subnet        = $ipv6_subnets[ $::supernodenum ]
   $backbone_ip_suffix = $backbone_ip_suffixes[ $::supernodenum ]
 
   include apache2
   include apt
   class { 'batman':
-    ipv4_suffix       => $ipv4_suffix,
     ipv4_subnet_start => $ipv4_subnet_start,
     ipv6_subnet       => $ipv6_subnet,
   }
