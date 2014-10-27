@@ -46,7 +46,7 @@ define supernode::batman {
 
   file_line { 'interfaces source dir':
     path  => '/etc/network/interfaces',
-    line  => 'source interfaces.d/bat0',
+    line  => 'source /etc/network/interfaces.d/bat0',
     require => File['/etc/network/interfaces.d/bat0'],
   }
 }
