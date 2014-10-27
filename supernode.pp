@@ -1,5 +1,5 @@
-$supernodenum       = NUM
-$fastd_key          = 'KEY'
-$fastd_web_service_auth = 'LOGIN:PASS'
-
-include supernode
+class{ 'supernode':
+  supernodenum            => 8,
+  fastd_key               => 'asdasdasd',
+  fastd_web_service_auth  => 'fastd8:asdasd',
+}

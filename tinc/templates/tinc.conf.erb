@@ -1,7 +1,7 @@
-Name=<%= 'fastd' + supernodenum %>
-Device=/dev/net/tun
-Mode=router
-Compression=9
-ConnectTo=paula
-ConnectTo=paul
-ConnectTo=mon
+Name=<%= server_name %>
+Device=<%= device %>
+Mode=<%= mode %>
+Compression=<% compression %>
+<% @connect_to.each do |connect| -%>
+ConnectTo=<%= connect %>
+<% end -%>

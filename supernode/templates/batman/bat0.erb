@@ -1,0 +1,9 @@
+iface bat0 inet static
+  address <%= ipv4_start %> netmask 255.255.192.0
+  pre-up  "modprobe batman-adv"
+  pre-up  "tunctl -t <%= fastd_iface %>"
+  pre-up  "batctl if add <%= fastd_iface %>"
+
+iface bat0 inet6 static
+  address <%= ipv6_addr %> netmask 64
+
