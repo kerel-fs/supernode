@@ -24,13 +24,11 @@ define supernode::fastd(
     pmtu              => 'no',
     interface         => $interface,
   } ->
-  exec { "${interface}/backbone_keys":
-    command => "/usr/bin/git clone ${backbone_keys_git} /etc/fastd/${interface}/backbone",
-    creates => "/etc/fastd/${interface}/backbone",
-    require => [
-      Package['git'],
-      File["/etc/fastd/${interface}"],
-    ],
+  vcsrepo { "/etc/fastd/${interface}/backbone":
+    ensure  => present,
+    provider  => git,
+    source    => $backbone_keys_git,
+    require   => File["/etc/fastd/${interface}"],
   }
 }
 
