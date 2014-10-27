@@ -1,15 +1,15 @@
 define tinc::server (
     $server_name,
     $connect_to,
+    $subnet,
+    $hosts_git,
     $device = '/dev/net/tun',
     $mode = 'router',
     $compression = 9,
     $interface = 'backbone',
     $tinc_up = '',
     $tinc_down = '',
-    $subnet = '',
     $key_bits = 4096,
-    $hosts_git = '',
   ) {
   include tinc
 
@@ -41,28 +41,25 @@ define tinc::server (
     require => File["/etc/tinc/${interface}"],
   }
 
-  if $subnet != '' {
-    file { "${interface}_subnet":
-      ensure  => file,
-      path    => "/etc/tinc/${interface}/subnet",
-      content => $subnet,
-      notify  => Exec["${interface}_concat_subnet"],
-    }
+  file { "${interface}_subnet":
+    ensure  => file,
+    path    => "/etc/tinc/${interface}/subnet",
+    content => $subnet,
+    notify  => Exec["${interface}_concat_subnet"],
   }
   
-  if $hosts_git != '' {
-    exec { "${interface}/hosts keys":
-      command     => "/usr/bin/git clone ${hosts_git} /etc/tinc/${interface}/hosts",
-      require     => Package['git'],
-      refreshonly => true,
-      notify      => Exec["${interface}_concat_subnet"],
-    }
+  vcsrepo { "/etc/tinc/${interface}/hosts":
+    ensure    => present,
+    provider  => git,
+    source    => $hosts_git,
+    require   => File["/etc/tinc/${interface}/hosts"],
+    notify    => Exec["${interface}_concat_subnet"],
   }
 
   exec { "${interface}_concat_subnet":
     command     => "/bin/cat /etc/tinc/${interface}/subnet /etc/tinc/${interface}/rsa_key.pub > /etc/tinc/${interface}/hosts/${server_name}",
     refreshonly => true,
-    require     => File["/etc/tinc/${interface}/hosts"],
+    require     => Vcsrepo["/etc/tinc/${interface}/hosts"],
   }
 
   if $tinc_up != '' {
