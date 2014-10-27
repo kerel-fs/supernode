@@ -6,7 +6,10 @@ define supernode::tinc (
 
   $supernodenum = $supernode::supernodenum
   $ipv6_addr    = $supernode::ipv6_addr
+  $ipv6_subnet  = $supernode::ipv6_subnet
+  $ipv4_subnet_start  = $supernode::ipv4_subnet_start
   $backbone_ip_suffix = $supernode::backbone_ip_suffix
+  
 
   tinc::server { $name:
     server_name => "fastd${supernodenum}",
@@ -16,11 +19,7 @@ define supernode::tinc (
 Subnet=172.27.${ipv4_subnet_start}.0/21
 Subnet=fdd3:5d16:b4dd:3::${backbone_ip_suffix}/128
 Subnet=2001:67c:20a0:${ipv6_subnet}::/64",
-  }~>
-  exec { 'tinc/hosts keys':
-    command     => "/usr/bin/git clone ${hosts_keys_git} /etc/tinc/backbone/hosts",
-    require     => Package['git'],
-    refreshonly => true,
+    hosts_git   => "https://github.com/ff-kbu/bbkeys",
   }
 
   exec { 'routing ffkbu table':

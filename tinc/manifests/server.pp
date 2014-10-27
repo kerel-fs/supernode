@@ -8,7 +8,8 @@ define tinc::server (
     $tinc_up = '',
     $tinc_down = '',
     $subnet = '',
-    $key_bits = 4096
+    $key_bits = 4096,
+    $hosts_git = '',
   ) {
   include tinc
 
@@ -46,6 +47,15 @@ define tinc::server (
       path    => "/etc/tinc/${interface}/subnet",
       content => $subnet,
       notify  => Exec["${interface}_concat_subnet"],
+    }
+  }
+  
+  if $hosts_git != '' {
+    exec { "${interface}/hosts keys":
+      command     => "/usr/bin/git clone ${hosts_git} /etc/tinc/${interface}/hosts",
+      require     => Package['git'],
+      refreshonly => true,
+      notify      => Exec["${interface}_concat_subnet"],
     }
   }
 
