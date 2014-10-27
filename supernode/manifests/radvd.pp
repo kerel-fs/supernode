@@ -7,7 +7,10 @@ define supernode::radvd ($ipv6_subnet) {
   service { 'radvd':
     ensure  => running,
     enable  => true,
-    require => Package['radvd']
+    require => [
+      Package['radvd'],
+      Augeas['/etc/sysctl.conf'],
+    ],
   }
 
   file { 'radvd.conf':
