@@ -13,7 +13,7 @@ define supernode::tinc (
 
   tinc::server { $name:
     server_name => "fastd${supernodenum}",
-    connect_to  => ['Paul', 'Paula'],
+    connect_to  => ['paul', 'paula'],
     tinc_up     => template('supernode/tinc/tinc-up.erb'),
     subnet      => "Subnet=172.27.255.${backbone_ip_suffix}/32
 Subnet=172.27.${ipv4_subnet_start}.0/21

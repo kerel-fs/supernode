@@ -79,7 +79,7 @@ define fastd::server (
       owner   => root,
       group   => root,
       mode    => '0755',
-      content => $fastd_up,
+      content => $on_up,
       require => File["/etc/fastd/${interface}"],
     }
   }
