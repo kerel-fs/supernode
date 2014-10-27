@@ -5,7 +5,7 @@ define tinc::server (
     $hosts_git,
     $device = '/dev/net/tun',
     $mode = 'router',
-    $compression = 9,
+    $compression = '9',
     $interface = 'backbone',
     $tinc_up = '',
     $tinc_down = '',
