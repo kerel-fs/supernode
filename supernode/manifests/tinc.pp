@@ -17,7 +17,7 @@ define supernode::tinc (
     tinc_up     => template('supernode/tinc/tinc-up.erb'),
     subnet      => "Subnet=172.27.255.${backbone_ip_suffix}/32
 Subnet=172.27.${ipv4_subnet_start}.0/21
-Subnet=fdd3:5d16:b4dd:3::${backbone_ip_suffix}/128
+Subnet=fdd3:5d16:b5dd:3::${backbone_ip_suffix}/128
 Subnet=2001:67c:20a0:${ipv6_subnet}::/64",
     hosts_git   => "https://github.com/ff-kbu/bbkeys",
   }
