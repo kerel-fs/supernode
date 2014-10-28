@@ -27,7 +27,7 @@ class supernode (
 
   $backbone_keys_git = 'https://github.com/ff-kbu/fastd-pubkeys'
 
-  $fastd_iface = 'mesh_vpn'
+  $fastd_iface = 'mesh-vpn'
 
   $ipv4_subnet_start  = $ipv4_subnets[ $supernodenum ][0]
   $ipv4_subnet_end    = $ipv4_subnets[ $supernodenum ][1]
