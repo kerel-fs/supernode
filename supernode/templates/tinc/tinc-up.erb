@@ -6,3 +6,6 @@ ip route add default dev $INTERFACE table ffkbu
 ip -6 addr add fdd3:5d16:b5dd:3::<%= backbone_ip_suffix %>/64 dev $INTERFACE
 ip -6 addr add <%= ipv6_addr %>/128 dev $INTERFACE
 ip -6 route add default via fdd3:5d16:b5dd:3::3
+
+/etc/init.d/nagios-nrpe-server start
+
