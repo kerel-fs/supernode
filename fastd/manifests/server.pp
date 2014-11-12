@@ -1,9 +1,9 @@
-define create_peers_folder($interface){
+define create_peers_folder($interface, $peers_dirs_owner){
   $folder = $name
   file { "${interface}/${folder}":
     ensure  => directory,
     path    => "/etc/fastd/${interface}/${folder}",
-    owner   => root,
+    owner   => $peers_dirs_owner,
     group   => root,
     require => File["/etc/fastd/${interface}"],
   }
@@ -12,6 +12,7 @@ define create_peers_folder($interface){
 define fastd::server (
     $secret_key,
     $peers_dirs = ['peers'],
+    $peers_dirs_owner = 'root',
     $on_up = '',
     $on_down = '',
     $on_establish = '',
@@ -49,7 +50,8 @@ define fastd::server (
   }
 
   create_peers_folder{$peers_dirs:
-    interface   => $interface,
+    interface         => $interface,
+    peers_dirs_owner  => $peers_dirs_owner,
   }
 
   if $config != '' {

@@ -1,5 +1,6 @@
 # trigger fastd - vpn installation
 define supernode::fastd(
+    $fastd_user,
     $backbone_keys_git = 'https://github.com/ff-kbu/fastd-pubkeys',
   ) {
 
@@ -16,6 +17,7 @@ define supernode::fastd(
   fastd::server{ "fastd${supernodenum}":
     secret_key        => $fastd_key,
     peers_dirs        => ['peers', 'backbone'],
+    peers_dirs_owner  => $fastd_user,
     on_up             => template('supernode/fastd/fastd-up.erb'),
     on_establish      => template('supernode/fastd/on-establish.erb'),
     on_disestablish   => template('supernode/fastd/on-disestablish.erb'),

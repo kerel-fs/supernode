@@ -38,14 +38,18 @@ class supernode (
   $ipv6_addr          = "2001:67c:20a0:${ipv6_subnet}::1"
   $ipv4_start         = "172.27.${ipv4_subnet_start}.1"
 
-  $hostname = "fastd${supernodenum}"
+  $hostname   = "fastd${supernodenum}"
+  $fastd_user = "fastd_serv"
 
   supernode::system_services{ $hostname: }
-  supernode::fastd{ $hostname: }
+  supernode::fastd{ $hostname:
+    fastd_user => $fastd_user,
+  }
   supernode::tinc{ $hostname: }
   supernode::batman { $hostname: }
   supernode::fastd_web_service { $hostname: 
-    fastd_web_service_auth => $fastd_web_service_auth,
+    fastd_user              => $fastd_user,
+    fastd_web_service_auth  => $fastd_web_service_auth,
   }
   supernode::dhcpd4 { $hostname:
     ipv4_subnet_start  => $ipv4_subnet_start,

@@ -1,5 +1,6 @@
 # setup the automatic key upload server
 define supernode::fastd_web_service(
+    $fastd_user,
     $fastd_web_service_auth,
   ) {
   package { [
@@ -25,20 +26,20 @@ define supernode::fastd_web_service(
     require => Package['apache2'],
   }
 
-  user { 'fastd_serv':
+  user { $fastd_user:
     ensure      => present,
     shell       => '/bin/bash',
-    home        => '/home/fastd_serv',
+    home        => "/home/${fastd_user}",
     managehome  => true,
   }
 
   augeas { 'sudoers':
     context => '/files/etc/sudoers',
     changes => [
-      'set spec[user = "fastd_serv"]/user fastd_serv',
-      'set spec[user = "fastd_serv"]/host_group/host ALL',
-      'set spec[user = "fastd_serv"]/host_group/command ALL',
-      'set spec[user = "fastd_serv"]/host_group/command/tag NOPASSWD',
+      "set spec[user = '${fastd_user}']/user ${fastd_user}",
+      "set spec[user = '${fastd_user}']/host_group/host ALL",
+      "set spec[user = '${fastd_user}']/host_group/command ALL",
+      "set spec[user = '${fastd_user}']/host_group/command/tag NOPASSWD",
     ],
     require => Package['sudo'],
   }
@@ -71,11 +72,11 @@ define supernode::fastd_web_service(
   }
 
   exec { 'chown fastd-service':
-    command     => '/bin/chown -R fastd_serv:fastd_serv /srv/fastd-service/',
+    command     => "/bin/chown -R ${fastd_user}:${fastd_user} /srv/fastd-service/",
     refreshonly => true,
     require     => [
       File['fastd_web_service conf'],
-      User['fastd_serv'],
+      User[$fastd_user],
     ],
   }
 }
