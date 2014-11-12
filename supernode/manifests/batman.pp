@@ -3,10 +3,7 @@
 define supernode::batman {
   package { 'batman-adv-dkms':
     ensure  => installed,
-    require => [
-      Augeas['sources_universe'],
-      Exec['apt-get update'],
-    ],
+    require => Apt::Source['universe-factory'],
   }
 
   package { 'uml-utilities':

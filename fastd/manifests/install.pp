@@ -1,6 +1,11 @@
 class fastd::install () {
+  include apt
   package { 'fastd':
     ensure  => installed,
-    require => Augeas['sources_universe'],
+    require => Apt::Source['universe-factory'],
+  }
+  apt::force { 'libjson-c2':
+    release => 'wheezy-backports',
+    require => Apt::Source['wheezy-backports'],
   }
 }
