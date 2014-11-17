@@ -11,7 +11,7 @@ ip -6 addr add fdd3:5d16:b5dd:3::<%= backbone_ip_suffix %>/64 dev $INTERFACE
 ## Public-IP as announced in backbone
 ip -6 addr add <%= ipv6_addr %>/128 dev $INTERFACE
 ## Default-Route for mesh clients
-ip -6 route add default via $INTERFACE table ffkbu6
+ip -6 route add default dev $INTERFACE table ffkbu6
 
 /etc/init.d/nagios-nrpe-server restart
 
