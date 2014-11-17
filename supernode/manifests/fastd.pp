@@ -14,6 +14,8 @@ define supernode::fastd(
 
   $interface    = 'mesh-vpn'
 
+  Exec['routing ffkbu table']->
+  Exec['routing ffkbu6 table']->
   fastd::server{ "fastd${supernodenum}":
     secret_key        => $fastd_key,
     peers_dirs        => ['peers', 'backbone'],

@@ -32,6 +32,8 @@ define supernode::batman {
     ensure  => directory,
   }
 
+  Exec['routing ffkbu table']->
+  Exec['routing ffkbu6 table']->
   file { '/etc/network/interfaces.d/bat0':
     ensure  => file,
     owner   => root,

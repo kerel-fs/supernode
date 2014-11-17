@@ -2,7 +2,7 @@
 class supernode (
     $supernodenum,
     $fastd_key,
-    $fastd_web_service_auth
+    $fastd_web_service_auth,
   ) {
   include puppet
 

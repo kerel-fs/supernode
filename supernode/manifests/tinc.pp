@@ -10,7 +10,8 @@ define supernode::tinc (
   $ipv4_subnet_start  = $supernode::ipv4_subnet_start
   $backbone_ip_suffix = $supernode::backbone_ip_suffix
   
-
+  Exec['routing ffkbu table']->
+  Exec['routing ffkbu6 table']->
   tinc::server { $name:
     server_name => "fastd${supernodenum}",
     connect_to  => ['paul', 'paula'],
@@ -20,11 +21,6 @@ Subnet=172.27.${ipv4_subnet_start}.0/21
 Subnet=fdd3:5d16:b5dd:3::${backbone_ip_suffix}/128
 Subnet=2001:67c:20a0:${ipv6_subnet}::/64",
     hosts_git   => "https://github.com/ff-kbu/bbkeys",
-  }
-
-  exec { 'routing ffkbu table':
-    command => '/bin/echo "200 ffkbu" > /etc/iproute2/rt_tables',
-    unless  => '/bin/grep "200 ffkbu" /etc/iproute2/rt_tables',
   }
 
 }

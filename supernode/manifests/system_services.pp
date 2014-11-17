@@ -47,4 +47,14 @@ APT::Periodic::Unattended-Upgrade "1";
       'set net.core.wmem_default 83886080',
     ],
   }
+
+  exec { 'routing ffkbu table':
+    command => '/bin/echo "200 ffkbu" >> /etc/iproute2/rt_tables',
+    unless  => '/bin/grep "200 ffkbu" /etc/iproute2/rt_tables',
+  }
+
+  exec { 'routing ffkbu6 table':
+    command => '/bin/echo "201 ffkbu6" >> /etc/iproute2/rt_tables',
+    unless  => '/bin/grep "201 ffkbu6" /etc/iproute2/rt_tables',
+  }
 }
