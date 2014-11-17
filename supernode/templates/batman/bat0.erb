@@ -3,10 +3,22 @@ iface bat0 inet static
   address <%= ipv4_start %> 
   netmask 255.255.192.0
   pre-up  modprobe batman-adv && tunctl -t <%= fastd_iface %> && batctl if add <%= fastd_iface %>
-
+  post-up ip rule add iif bat0 table ffkbu
+  pre-down ip rule del iif bat0 table ffkbu
+  
 iface bat0 inet6 static
   address <%= ipv6_addr %> 
   netmask 64
+  # Routes (both tables)
+  # Note: route del not needed - shutting down the interfaces removes routes anyway
+  post-up ip -6 route add 2001:67c:20a0:b100::/60 dev bat0
+  post-up ip -6 route add 2001:67c:20a0:b100::/60 dev bat0 table ffkbu6
+
+  # Rules (iif: routed traffic, from: traffic from the supernode)
+  post-up ip -6 rule add iif bat0 table ffkbu6
+  post-up ip -6 rule add from 2001:67c:20a0:b100::/60 table ffkbu6
+  pre-down ip -6 rule del iif bat0 table ffkbu6
+  pre-down ip -6 rule del from 2001:67c:20a0:b100::/60 table ffkbu6
 
 auto bat0:0
 iface bat0:0 inet static

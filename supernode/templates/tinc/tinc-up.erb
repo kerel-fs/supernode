@@ -1,11 +1,17 @@
 #!/bin/sh
 ifconfig $INTERFACE 172.27.255.<%= backbone_ip_suffix %> netmask 255.255.255.0 up
 
-ip route add 172.27.255.0/24 dev $INTERFACE table ffkbu
+#IPv4
+## Default-Route for Mesh-clients
 ip route add default dev $INTERFACE table ffkbu
-ip -6 addr add fdd3:5d16:b5dd:3::<%= backbone_ip_suffix %>/64 dev $INTERFACE
-ip -6 addr add <%= ipv6_addr %>/128 dev $INTERFACE
-ip -6 route add default via fdd3:5d16:b5dd:3::3
 
-/etc/init.d/nagios-nrpe-server start
+# IPv6
+## VPN-Addresses (local)
+ip -6 addr add fdd3:5d16:b5dd:3::<%= backbone_ip_suffix %>/64 dev $INTERFACE
+## Public-IP as announced in backbone
+ip -6 addr add <%= ipv6_addr %>/128 dev $INTERFACE
+## Default-Route for mesh clients
+ip -6 route add default dev $INTERFACE table ffkbu6
+
+/etc/init.d/nagios-nrpe-server restart
 
