@@ -27,6 +27,7 @@ define supernode::fastd(
     secure_handshakes => 'no',
     pmtu              => 'no',
     interface         => $interface,
+    status_socket     => '/var/log/fastd_socket',
   } ->
   vcsrepo { "/etc/fastd/${interface}/backbone":
     ensure  => present,

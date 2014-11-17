@@ -26,6 +26,7 @@ define fastd::server (
     $mtu = '1426',
     $pmtu = 'auto',
     $config = '',
+    $status_socket = '',
   ) {
   require stdlib
 
