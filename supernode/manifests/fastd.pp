@@ -23,7 +23,7 @@ define supernode::fastd(
     on_up             => template('supernode/fastd/fastd-up.erb'),
     on_establish      => template('supernode/fastd/on-establish.erb'),
     on_disestablish   => template('supernode/fastd/on-disestablish.erb'),
-    ciphers           => ['xsalsa20-poly1305', 'salsa2012+gmac', 'null'],
+    ciphers           => ['salsa2012+umac', 'xsalsa20-poly1305', 'salsa2012+gmac', 'null'],
     secure_handshakes => 'no',
     pmtu              => 'no',
     interface         => $interface,
