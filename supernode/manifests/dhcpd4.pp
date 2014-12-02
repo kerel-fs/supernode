@@ -14,7 +14,10 @@ define supernode::dhcpd4 (
   service { 'isc-dhcp-server':
     ensure  => running,
     enable  => true,
-    require => Package['isc-dhcp-server'],
+    require => [
+      Package['isc-dhcp-server'],
+      Exec['ifup bat0'],
+    ],
   }
 
   file { 'dhcpd.conf':

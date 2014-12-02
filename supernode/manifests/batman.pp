@@ -41,11 +41,13 @@ define supernode::batman {
     mode    => '0644',
     content => template('supernode/batman/bat0.erb'),
     require => File['/etc/network/interfaces.d'],
-  }
-
+  }->
   file_line { 'interfaces source dir':
     path  => '/etc/network/interfaces',
     line  => 'source /etc/network/interfaces.d/bat0',
-    require => File['/etc/network/interfaces.d/bat0'],
+  }~>
+  exec { 'ifup bat0':
+    command     => '/sbin/ifup bat0',
+    refreshonly => true,
   }
 }
