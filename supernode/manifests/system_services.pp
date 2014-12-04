@@ -36,7 +36,6 @@ APT::Periodic::Unattended-Upgrade "1";
     context => '/files/etc/sysctl.conf',
     changes => [
       'set net.ipv4.ip_forward 1',
-      'set net.ipv4.ip_no_pmtu_disc 1',
       'set net.ipv4.route.flush 1',
       'set net.ipv6.conf.all.forwarding 1',
       'set net.ipv6.conf.all.autoconf 0',
