@@ -9,4 +9,5 @@ log-facility local7;
 subnet 172.27.0.0 netmask 255.255.192.0 {
   range 172.27.<%= ipv4_subnet_start %>.10 172.27.<%= ipv4_subnet_end %>.255;
   option routers 172.27.<%= ipv4_subnet_start %>.1;
+  option interface-mtu 1350;
 }
