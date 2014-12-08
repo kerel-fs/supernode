@@ -20,10 +20,11 @@ define supernode::unbound {
   }
 
   service { 'unbound':
-    ensure    => running,
-    enable    => true,
-    hasstatus => true,
-    require   => [
+    ensure      => running,
+    enable      => true,
+    hasstatus   => false,
+    hasrestart  => true,
+    require     => [
       Package['unbound'],
       File['unbound.conf'],
       Augeas['iface lo post-up'],
