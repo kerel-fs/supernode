@@ -1,4 +1,4 @@
-class tinc::install {
+class bird::install {
   include apt
 
   package { 'bird':
