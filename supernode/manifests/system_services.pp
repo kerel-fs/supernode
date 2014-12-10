@@ -56,4 +56,10 @@ APT::Periodic::Unattended-Upgrade "1";
     command => '/bin/echo "201 ffkbu6" >> /etc/iproute2/rt_tables',
     unless  => '/bin/grep "201 ffkbu6" /etc/iproute2/rt_tables',
   }
+
+  exec { 'routing icvpn table':
+    command => '/bin/echo "202 icvpn" >> /etc/iproute2/rt_tables',
+    unless  => '/bin/grep "202 icvpn" /etc/iproute2/rt_tables',
+  }
+
 }

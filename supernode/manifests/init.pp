@@ -64,6 +64,5 @@ class supernode (
 
   supernode::unbound { $hostname: }
 
-  #FIXME: Muss $hostname: übergeben werden? Wird eig. nicht gebraucht
-  supernode::bird { }
+  supernode::icvpn { $hostname: }
 }
